@@ -24,6 +24,8 @@ export default function App() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
   const [lives, setLives] = useState(6); 
+  const [score, setScore] = useState(0);
+
 
   const currentWord = words[currentWordIndex];
   const errors = 6 - lives; 
@@ -34,12 +36,16 @@ export default function App() {
     .join(" ");
     const handleReset = (nextWord = false) => {
       setGuessedLetters([]);
-      setLives(6); 
+      setLives(6);
     
       if (nextWord) {
+        if (!displayWord.includes("_")) {
+          setScore(score + 1); 
+        }
         setCurrentWordIndex((prev) => (prev + 1) % words.length);
       }
     };
+    
   
     
     
@@ -57,7 +63,8 @@ export default function App() {
   
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
-   <Header onRevealAnswer={handleRevealAnswer} />
+  <Header score={score} onRevealAnswer={handleRevealAnswer} />
+
 
       <HangmanDrawing errors={errors} />
       <GameBoard category={currentWord.category} hint={currentWord.hint} displayWord={displayWord} lives={lives} />
