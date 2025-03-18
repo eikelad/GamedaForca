@@ -6,9 +6,19 @@ import HangmanDrawing from "./components/HangmanDrawing";
 import "./styles/globals.css";
 
 const words = [
-  { word: "peacock", category: "BIRDS", hint: "A large bird with blue and green tail feathers." },
-  { word: "eagle", category: "BIRDS", hint: "A bird of prey known for sharp vision." },
+  { word: "amazonas", category: "ESTADO", hint: "Estado com a maior floresta tropical do mundo." },
+  { word: "bahia", category: "ESTADO", hint: "Conhecido pelo Carnaval de Salvador e a cultura afro-brasileira." },
+  { word: "minasgerais", category: "ESTADO", hint: "Famoso por suas montanhas, queijo e cidades historicas." },
+  { word: "pernambuco", category: "ESTADO", hint: "Lar do frevo e do maior Sao Joao do mundo." },
+  { word: "riodejaneiro", category: "ESTADO", hint: "Cidade maravilhosa e palco do Cristo Redentor." },
+  { word: "saopaulo", category: "ESTADO", hint: "O estado mais populoso e centro economico do Brasil." },
+  { word: "ceara", category: "ESTADO", hint: "Famoso por suas praias e pelo humor cearense." },
+  { word: "parana", category: "ESTADO", hint: "Onde fica a cidade de Curitiba e as Cataratas do Iguacu." },
+  { word: "matogrosso", category: "ESTADO", hint: "Abriga o Pantanal, a maior planicie alagada do mundo." },
+  { word: "tocantins", category: "ESTADO", hint: "Estado jovem que abriga o Jalapao." },
 ];
+
+
 
 export default function App() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -30,6 +40,7 @@ export default function App() {
         setCurrentWordIndex((prev) => (prev + 1) % words.length);
       }
     };
+  
     
     
   const handleGuess = (letter: string) => {
@@ -40,10 +51,14 @@ export default function App() {
       }
     }
   };
-
+  const handleRevealAnswer = () => {
+    setGuessedLetters(currentWord.word.split(""));
+  };
+  
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <Header />
+   <Header onRevealAnswer={handleRevealAnswer} />
+
       <HangmanDrawing errors={errors} />
       <GameBoard category={currentWord.category} hint={currentWord.hint} displayWord={displayWord} lives={lives} />
       <Keyboard guessedLetters={guessedLetters} onGuess={handleGuess} />
